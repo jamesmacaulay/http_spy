@@ -20,7 +20,15 @@ import "deps/phoenix_html/web/static/js/phoenix_html"
 
 import socket from "./socket"
 
-var elmDiv = document.getElementById('elm-main')
-  , elmApp = Elm.embed(Elm.HttpSpy, elmDiv, {requests: null});
+const elmDiv = document.getElementById('elm-main');
+const app = Elm.embed(Elm.HttpSpy, elmDiv, {requests: null});
 
-window.HttpSpy = elmApp;
+socket.connect();
+const slug = document.location.pathname.split("/")[1];
+const requestChannel = socket.channel("requests:" + slug);
+
+requestChannel.join()
+  .receive("ok", resp => console.log("joined the request channel", resp))
+  .receive("error", reason => console.error("join failed", reason));
+
+window.HttpSpy = app;

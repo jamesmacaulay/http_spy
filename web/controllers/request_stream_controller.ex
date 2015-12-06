@@ -11,6 +11,37 @@ defmodule HttpSpy.RequestStreamController do
   end
 
   def capture(conn, %{"slug" => slug}) do
-    send_resp conn, 200, ""
+    conn
+    |> send_resp(200, "")
+    |> broadcast_request_info(slug)
+  end
+
+  defp broadcast_request_info(conn, slug) do
+    topic = "requests:" <> slug
+    event = "request"
+    msg = serializable_request(conn)
+    HttpSpy.Endpoint.broadcast(topic, event, msg)
+    conn
+  end
+
+  def serializable_request(conn) do
+    %{
+      scheme: conn.scheme,
+      method: conn.method,
+      host: conn.host,
+      port: conn.port,
+      path: conn.request_path,
+      query_string: conn.query_string,
+      headers: serializable_headers(conn.req_headers),
+      remote_ip: serializable_ip(conn.remote_ip)
+    }
+  end
+
+  def serializable_headers(headers) do
+    for {k,v} <- headers, do: [k,v]
+  end
+
+  def serializable_ip({a,b,c,d}) do
+    Enum.join([a,b,c,d], ".")
   end
 end
