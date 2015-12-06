@@ -25,6 +25,11 @@ defmodule HttpSpy.RequestStreamController do
   end
 
   def serializable_request(conn) do
+    truncatedBody = case read_body(conn) do
+      {:ok, body, _} -> body
+      {:more, body, _} -> body
+      {:error, _} -> ""
+    end
     %{
       scheme: conn.scheme,
       method: conn.method,
@@ -33,7 +38,8 @@ defmodule HttpSpy.RequestStreamController do
       path: conn.request_path,
       queryString: conn.query_string,
       headers: serializable_headers(conn.req_headers),
-      remoteIp: serializable_ip(conn.remote_ip)
+      remoteIp: serializable_ip(conn.remote_ip),
+      body: truncatedBody
     }
   end
 

@@ -22,10 +22,10 @@ defmodule HttpSpy.Endpoint do
   plug Plug.RequestId
   plug Plug.Logger
 
-  plug Plug.Parsers,
-    parsers: [:urlencoded, :multipart, :json],
-    pass: ["*/*"],
-    json_decoder: Poison
+  # plug Plug.Parsers,
+  #   parsers: [:urlencoded, :multipart, :json],
+  #   pass: ["*/*"],
+  #   json_decoder: Poison
 
   plug Plug.MethodOverride
   plug Plug.Head

@@ -10629,24 +10629,34 @@ Elm.HttpSpy.make = function (_elm) {
    $Signal = Elm.Signal.make(_elm),
    $StartApp = Elm.StartApp.make(_elm);
    var _op = {};
-   var querySuffix = function (request) {    var _p0 = request.queryString;if (_p0 === "") {    return "";} else {    return A2($Basics._op["++"],"?",_p0);}};
+   var bodyView = function (body) {
+      return _U.eq(body,"") ? A2($Html.div,_U.list([]),_U.list([])) : A2($Html.div,
+      _U.list([]),
+      _U.list([A2($Html.h4,_U.list([]),_U.list([$Html.text("body")]))
+              ,A2($Html.textarea,_U.list([$Html$Attributes.cols(80),$Html$Attributes.rows(10)]),_U.list([$Html.text(body)]))]));
+   };
+   var headerEntry = function (_p0) {
+      var _p1 = _p0;
+      return _U.list([A2($Html.dt,_U.list([]),_U.list([$Html.text(_p1._0)])),A2($Html.dd,_U.list([]),_U.list([$Html.text(_p1._1)]))]);
+   };
+   var querySuffix = function (request) {    var _p2 = request.queryString;if (_p2 === "") {    return "";} else {    return A2($Basics._op["++"],"?",_p2);}};
    var portSuffix = function (request) {
-      var _p1 = {ctor: "_Tuple2",_0: request.scheme,_1: request.portNumber};
-      _v1_2: do {
-         switch (_p1._0)
-         {case "http": if (_p1._1 === 80) {
+      var _p3 = {ctor: "_Tuple2",_0: request.scheme,_1: request.portNumber};
+      _v2_2: do {
+         switch (_p3._0)
+         {case "http": if (_p3._1 === 80) {
                     return "";
                  } else {
-                    break _v1_2;
+                    break _v2_2;
                  }
-            case "https": if (_p1._1 === 443) {
+            case "https": if (_p3._1 === 443) {
                     return "";
                  } else {
-                    break _v1_2;
+                    break _v2_2;
                  }
-            default: break _v1_2;}
+            default: break _v2_2;}
       } while (false);
-      return A2($Basics._op["++"],":",$Basics.toString(_p1._1));
+      return A2($Basics._op["++"],":",$Basics.toString(_p3._1));
    };
    var requestOneLiner = function (request) {
       return A2($Basics._op["++"],
@@ -10660,47 +10670,58 @@ Elm.HttpSpy.make = function (_elm) {
       A2($Basics._op["++"],request.host,A2($Basics._op["++"],portSuffix(request),A2($Basics._op["++"],request.path,querySuffix(request))))))));
    };
    var requestView = function (request) {
-      return A2($Html.div,_U.list([]),_U.list([A2($Html.h3,_U.list([]),_U.list([$Html.text(requestOneLiner(request))]))]));
+      return A2($Html.div,
+      _U.list([]),
+      _U.list([A2($Html.h3,_U.list([]),_U.list([$Html.text(requestOneLiner(request))]))
+              ,A2($Html.div,
+              _U.list([]),
+              _U.list([A2($Html.h4,_U.list([]),_U.list([$Html.text("headers")]))
+                      ,A2($Html.dl,_U.list([]),$List.concat(A2($List.map,headerEntry,request.headers)))]))
+              ,bodyView(request.body)]));
    };
    var update = F2(function (action,model) {
-      var _p2 = action;
-      if (_p2.ctor === "NoOp") {
+      var _p4 = action;
+      if (_p4.ctor === "NoOp") {
             return {ctor: "_Tuple2",_0: model,_1: $Effects.none};
          } else {
-            return {ctor: "_Tuple2",_0: A2($List._op["::"],_p2._0,model),_1: $Effects.none};
+            return {ctor: "_Tuple2",_0: A2($List._op["::"],_p4._0,model),_1: $Effects.none};
          }
    });
    var init = {ctor: "_Tuple2",_0: _U.list([]),_1: $Effects.none};
    var Receive = function (a) {    return {ctor: "Receive",_0: a};};
    var NoOp = {ctor: "NoOp"};
-   var Request = F8(function (a,b,c,d,e,f,g,h) {    return {scheme: a,method: b,host: c,portNumber: d,path: e,queryString: f,headers: g,remoteIp: h};});
+   var Request = F9(function (a,b,c,d,e,f,g,h,i) {
+      return {scheme: a,method: b,host: c,portNumber: d,path: e,queryString: f,headers: g,remoteIp: h,body: i};
+   });
    var requests = Elm.Native.Port.make(_elm).inboundSignal("requests",
    "Maybe.Maybe HttpSpy.Request",
    function (v) {
-      return v === null ? Elm.Maybe.make(_elm).Nothing : Elm.Maybe.make(_elm).Just(typeof v === "object" && "scheme" in v && "method" in v && "host" in v && "portNumber" in v && "path" in v && "queryString" in v && "headers" in v && "remoteIp" in v ? {_: {}
-                                                                                                                                                                                                                                                           ,scheme: typeof v.scheme === "string" || typeof v.scheme === "object" && v.scheme instanceof String ? v.scheme : _U.badPort("a string",
-                                                                                                                                                                                                                                                           v.scheme)
-                                                                                                                                                                                                                                                           ,method: typeof v.method === "string" || typeof v.method === "object" && v.method instanceof String ? v.method : _U.badPort("a string",
-                                                                                                                                                                                                                                                           v.method)
-                                                                                                                                                                                                                                                           ,host: typeof v.host === "string" || typeof v.host === "object" && v.host instanceof String ? v.host : _U.badPort("a string",
-                                                                                                                                                                                                                                                           v.host)
-                                                                                                                                                                                                                                                           ,portNumber: typeof v.portNumber === "number" && isFinite(v.portNumber) && Math.floor(v.portNumber) === v.portNumber ? v.portNumber : _U.badPort("an integer",
-                                                                                                                                                                                                                                                           v.portNumber)
-                                                                                                                                                                                                                                                           ,path: typeof v.path === "string" || typeof v.path === "object" && v.path instanceof String ? v.path : _U.badPort("a string",
-                                                                                                                                                                                                                                                           v.path)
-                                                                                                                                                                                                                                                           ,queryString: typeof v.queryString === "string" || typeof v.queryString === "object" && v.queryString instanceof String ? v.queryString : _U.badPort("a string",
-                                                                                                                                                                                                                                                           v.queryString)
-                                                                                                                                                                                                                                                           ,headers: typeof v.headers === "object" && v.headers instanceof Array ? Elm.Native.List.make(_elm).fromArray(v.headers.map(function (v) {
-                                                                                                                                                                                                                                                              return typeof v === "object" && v instanceof Array ? {ctor: "_Tuple2"
-                                                                                                                                                                                                                                                                                                                   ,_0: typeof v[0] === "string" || typeof v[0] === "object" && v[0] instanceof String ? v[0] : _U.badPort("a string",
-                                                                                                                                                                                                                                                                                                                   v[0])
-                                                                                                                                                                                                                                                                                                                   ,_1: typeof v[1] === "string" || typeof v[1] === "object" && v[1] instanceof String ? v[1] : _U.badPort("a string",
-                                                                                                                                                                                                                                                                                                                   v[1])} : _U.badPort("an array",
-                                                                                                                                                                                                                                                              v);
-                                                                                                                                                                                                                                                           })) : _U.badPort("an array",
-                                                                                                                                                                                                                                                           v.headers)
-                                                                                                                                                                                                                                                           ,remoteIp: typeof v.remoteIp === "string" || typeof v.remoteIp === "object" && v.remoteIp instanceof String ? v.remoteIp : _U.badPort("a string",
-                                                                                                                                                                                                                                                           v.remoteIp)} : _U.badPort("an object with fields `scheme`, `method`, `host`, `portNumber`, `path`, `queryString`, `headers`, `remoteIp`",
+      return v === null ? Elm.Maybe.make(_elm).Nothing : Elm.Maybe.make(_elm).Just(typeof v === "object" && "scheme" in v && "method" in v && "host" in v && "portNumber" in v && "path" in v && "queryString" in v && "headers" in v && "remoteIp" in v && "body" in v ? {_: {}
+                                                                                                                                                                                                                                                                          ,scheme: typeof v.scheme === "string" || typeof v.scheme === "object" && v.scheme instanceof String ? v.scheme : _U.badPort("a string",
+                                                                                                                                                                                                                                                                          v.scheme)
+                                                                                                                                                                                                                                                                          ,method: typeof v.method === "string" || typeof v.method === "object" && v.method instanceof String ? v.method : _U.badPort("a string",
+                                                                                                                                                                                                                                                                          v.method)
+                                                                                                                                                                                                                                                                          ,host: typeof v.host === "string" || typeof v.host === "object" && v.host instanceof String ? v.host : _U.badPort("a string",
+                                                                                                                                                                                                                                                                          v.host)
+                                                                                                                                                                                                                                                                          ,portNumber: typeof v.portNumber === "number" && isFinite(v.portNumber) && Math.floor(v.portNumber) === v.portNumber ? v.portNumber : _U.badPort("an integer",
+                                                                                                                                                                                                                                                                          v.portNumber)
+                                                                                                                                                                                                                                                                          ,path: typeof v.path === "string" || typeof v.path === "object" && v.path instanceof String ? v.path : _U.badPort("a string",
+                                                                                                                                                                                                                                                                          v.path)
+                                                                                                                                                                                                                                                                          ,queryString: typeof v.queryString === "string" || typeof v.queryString === "object" && v.queryString instanceof String ? v.queryString : _U.badPort("a string",
+                                                                                                                                                                                                                                                                          v.queryString)
+                                                                                                                                                                                                                                                                          ,headers: typeof v.headers === "object" && v.headers instanceof Array ? Elm.Native.List.make(_elm).fromArray(v.headers.map(function (v) {
+                                                                                                                                                                                                                                                                             return typeof v === "object" && v instanceof Array ? {ctor: "_Tuple2"
+                                                                                                                                                                                                                                                                                                                                  ,_0: typeof v[0] === "string" || typeof v[0] === "object" && v[0] instanceof String ? v[0] : _U.badPort("a string",
+                                                                                                                                                                                                                                                                                                                                  v[0])
+                                                                                                                                                                                                                                                                                                                                  ,_1: typeof v[1] === "string" || typeof v[1] === "object" && v[1] instanceof String ? v[1] : _U.badPort("a string",
+                                                                                                                                                                                                                                                                                                                                  v[1])} : _U.badPort("an array",
+                                                                                                                                                                                                                                                                             v);
+                                                                                                                                                                                                                                                                          })) : _U.badPort("an array",
+                                                                                                                                                                                                                                                                          v.headers)
+                                                                                                                                                                                                                                                                          ,remoteIp: typeof v.remoteIp === "string" || typeof v.remoteIp === "object" && v.remoteIp instanceof String ? v.remoteIp : _U.badPort("a string",
+                                                                                                                                                                                                                                                                          v.remoteIp)
+                                                                                                                                                                                                                                                                          ,body: typeof v.body === "string" || typeof v.body === "object" && v.body instanceof String ? v.body : _U.badPort("a string",
+                                                                                                                                                                                                                                                                          v.body)} : _U.badPort("an object with fields `scheme`, `method`, `host`, `portNumber`, `path`, `queryString`, `headers`, `remoteIp`, `body`",
       v));
    });
    var requestActions = A3($Signal.filterMap,$Maybe.map(Receive),NoOp,requests);
@@ -10735,6 +10756,8 @@ Elm.HttpSpy.make = function (_elm) {
                                 ,portSuffix: portSuffix
                                 ,querySuffix: querySuffix
                                 ,requestOneLiner: requestOneLiner
+                                ,headerEntry: headerEntry
+                                ,bodyView: bodyView
                                 ,requestView: requestView
                                 ,header: header
                                 ,view: view

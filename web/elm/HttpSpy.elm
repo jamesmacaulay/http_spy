@@ -19,6 +19,7 @@ type alias Request =
   , queryString : String
   , headers : List (String, String)
   , remoteIp : String
+  , body : String
   }
 
 type alias Model = List Request
@@ -62,13 +63,46 @@ requestOneLiner request =
     ++ request.path
     ++ querySuffix(request)
 
+headerEntry : (String, String) -> List Html
+headerEntry (k, v) =
+  [ Html.dt [ ] [ Html.text k ]
+  , Html.dd [ ] [ Html.text v ]
+  ]
+
+bodyView : String -> Html
+bodyView body =
+  if body == "" then
+    Html.div [ ] [ ]
+  else
+    Html.div
+        [ ]
+        [ Html.h4
+            [ ]
+            [ Html.text "body" ]
+        , Html.textarea
+            [ cols 80
+            , rows 10
+            ]
+            [ Html.text body ]
+        ]
+
 requestView : Request -> Html
 requestView request =
   Html.div
     [ ]
     [ Html.h3
         [ ]
-        [ Html.text (requestOneLiner request)]
+        [ Html.text (requestOneLiner request) ]
+    , Html.div
+        [ ]
+        [ Html.h4
+            [ ]
+            [ Html.text "headers" ]
+        , Html.dl
+            [ ]
+            (request.headers |> List.map headerEntry |> List.concat)
+        ]
+    , bodyView request.body
     ]
 
 header : Html
