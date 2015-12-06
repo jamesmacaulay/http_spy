@@ -29,11 +29,11 @@ defmodule HttpSpy.RequestStreamController do
       scheme: conn.scheme,
       method: conn.method,
       host: conn.host,
-      port: conn.port,
+      portNumber: conn.port,
       path: conn.request_path,
-      query_string: conn.query_string,
+      queryString: conn.query_string,
       headers: serializable_headers(conn.req_headers),
-      remote_ip: serializable_ip(conn.remote_ip)
+      remoteIp: serializable_ip(conn.remote_ip)
     }
   end
 

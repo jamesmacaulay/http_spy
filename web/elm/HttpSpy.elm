@@ -7,8 +7,14 @@ import Html.Attributes exposing (..)
 import StartApp
 
 type alias Request =
-  { method : String,
-    body : String
+  { scheme : String
+  , method : String
+  , host : String
+  , portNumber : Int
+  , path : String
+  , queryString : String
+  , headers : List (String, String)
+  , remoteIp : String
   }
 
 type alias Model = List Request
@@ -18,7 +24,7 @@ type Action
   | Receive Request
 
 init : (Model, Effects Action)
-init = ([Request "post" "hello"], Effects.none)
+init = ([], Effects.none)
 
 update : Action -> Model -> (Model, Effects Action)
 update action model =
@@ -30,7 +36,9 @@ update action model =
 
 requestView : Request -> Html
 requestView request =
-  toString request |> Html.text
+  Html.div
+    [ ]
+    [ Html.text (toString request) ]
 
 view : Signal.Address Action -> Model -> Html
 view address model =

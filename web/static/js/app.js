@@ -31,4 +31,6 @@ requestChannel.join()
   .receive("ok", resp => console.log("joined the request channel", resp))
   .receive("error", reason => console.error("join failed", reason));
 
+requestChannel.on("request", app.ports.requests.send);
+
 window.HttpSpy = app;
