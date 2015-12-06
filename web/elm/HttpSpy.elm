@@ -68,19 +68,31 @@ requestView request =
     [ ]
     [ Html.h3
         [ ]
-        [ Html.text (requestOneLiner request)]]
+        [ Html.text (requestOneLiner request)]
+    ]
 
 header : Html
 header =
   Html.div
     [ ]
     [ Html.h1 [] [ Html.text "HttpSpy" ]
-    , Html.text "Make some requests to "
-    , Html.input
-        [ readonly True
-        , value requestUrl
-        , size 40]
-        [ ]]
+    , Html.div
+        [ ]
+        [ Html.a
+            [ href "https://github.com/jamesmacaulay/http_spy"
+            , target "_blank" ]
+            [ Html.text "source on github" ]
+        ]
+    , Html.p
+        [ ]
+        [ Html.text "Make some requests to "
+        , Html.input
+            [ readonly True
+            , value requestUrl
+            , size 40]
+            [ ]
+        ]
+    ]
 
 view : Signal.Address Action -> Model -> Html
 view address model =

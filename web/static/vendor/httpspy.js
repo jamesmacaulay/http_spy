@@ -10712,8 +10712,15 @@ Elm.HttpSpy.make = function (_elm) {
    var header = A2($Html.div,
    _U.list([]),
    _U.list([A2($Html.h1,_U.list([]),_U.list([$Html.text("HttpSpy")]))
-           ,$Html.text("Make some requests to ")
-           ,A2($Html.input,_U.list([$Html$Attributes.readonly(true),$Html$Attributes.value(requestUrl),$Html$Attributes.size(40)]),_U.list([]))]));
+           ,A2($Html.div,
+           _U.list([]),
+           _U.list([A2($Html.a,
+           _U.list([$Html$Attributes.href("https://github.com/jamesmacaulay/http_spy"),$Html$Attributes.target("_blank")]),
+           _U.list([$Html.text("source on github")]))]))
+           ,A2($Html.p,
+           _U.list([]),
+           _U.list([$Html.text("Make some requests to ")
+                   ,A2($Html.input,_U.list([$Html$Attributes.readonly(true),$Html$Attributes.value(requestUrl),$Html$Attributes.size(40)]),_U.list([]))]))]));
    var view = F2(function (address,model) {    return A2($Html.div,_U.list([]),A2($List._op["::"],header,A2($List.map,requestView,model)));});
    var app = $StartApp.start({init: init,update: update,view: view,inputs: _U.list([requestActions])});
    var main = app.html;
