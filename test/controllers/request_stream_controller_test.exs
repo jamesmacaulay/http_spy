@@ -1,5 +1,5 @@
-defmodule Httpspy.RequestStreamControllerTest do
-  use Httpspy.ConnCase
+defmodule HttpSpy.RequestStreamControllerTest do
+  use HttpSpy.ConnCase
 
   test "GET /" do
     conn = get conn(), "/foo/spy"

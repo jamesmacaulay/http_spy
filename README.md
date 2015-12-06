@@ -1,4 +1,4 @@
-# Httpspy
+# HttpSpy
 
 To start your Phoenix app:
 

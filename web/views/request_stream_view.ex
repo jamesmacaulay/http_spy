@@ -1,3 +1,3 @@
-defmodule Httpspy.RequestStreamView do
-  use Httpspy.Web, :view
+defmodule HttpSpy.RequestStreamView do
+  use HttpSpy.Web, :view
 end

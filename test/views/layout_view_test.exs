@@ -1,3 +1,3 @@
-defmodule Httpspy.LayoutViewTest do
-  use Httpspy.ConnCase, async: true
+defmodule HttpSpy.LayoutViewTest do
+  use HttpSpy.ConnCase, async: true
 end

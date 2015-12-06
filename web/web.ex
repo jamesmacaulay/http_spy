@@ -1,12 +1,12 @@
-defmodule Httpspy.Web do
+defmodule HttpSpy.Web do
   @moduledoc """
   A module that keeps using definitions for controllers,
   views and so on.
 
   This can be used in your application as:
 
-      use Httpspy.Web, :controller
-      use Httpspy.Web, :view
+      use HttpSpy.Web, :controller
+      use HttpSpy.Web, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
@@ -26,7 +26,7 @@ defmodule Httpspy.Web do
     quote do
       use Phoenix.Controller
 
-      import Httpspy.Router.Helpers
+      import HttpSpy.Router.Helpers
     end
   end
 
@@ -40,7 +40,7 @@ defmodule Httpspy.Web do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
-      import Httpspy.Router.Helpers
+      import HttpSpy.Router.Helpers
     end
   end
 

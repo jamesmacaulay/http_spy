@@ -1,3 +1,3 @@
-defmodule Httpspy.LayoutView do
-  use Httpspy.Web, :view
+defmodule HttpSpy.LayoutView do
+  use HttpSpy.Web, :view
 end

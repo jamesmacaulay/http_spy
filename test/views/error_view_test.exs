@@ -1,21 +1,21 @@
-defmodule Httpspy.ErrorViewTest do
-  use Httpspy.ConnCase, async: true
+defmodule HttpSpy.ErrorViewTest do
+  use HttpSpy.ConnCase, async: true
 
   # Bring render/3 and render_to_string/3 for testing custom views
   import Phoenix.View
 
   test "renders 404.html" do
-    assert render_to_string(Httpspy.ErrorView, "404.html", []) ==
+    assert render_to_string(HttpSpy.ErrorView, "404.html", []) ==
            "Page not found"
   end
 
   test "render 500.html" do
-    assert render_to_string(Httpspy.ErrorView, "500.html", []) ==
+    assert render_to_string(HttpSpy.ErrorView, "500.html", []) ==
            "Server internal error"
   end
 
   test "render any other" do
-    assert render_to_string(Httpspy.ErrorView, "505.html", []) ==
+    assert render_to_string(HttpSpy.ErrorView, "505.html", []) ==
            "Server internal error"
   end
 end

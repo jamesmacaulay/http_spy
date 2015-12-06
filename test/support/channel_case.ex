@@ -1,4 +1,4 @@
-defmodule Httpspy.ChannelCase do
+defmodule HttpSpy.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -22,7 +22,7 @@ defmodule Httpspy.ChannelCase do
 
 
       # The default endpoint for testing
-      @endpoint Httpspy.Endpoint
+      @endpoint HttpSpy.Endpoint
     end
   end
 

@@ -1,4 +1,4 @@
-defmodule Httpspy.ConnCase do
+defmodule HttpSpy.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -20,10 +20,10 @@ defmodule Httpspy.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
 
-      import Httpspy.Router.Helpers
+      import HttpSpy.Router.Helpers
 
       # The default endpoint for testing
-      @endpoint Httpspy.Endpoint
+      @endpoint HttpSpy.Endpoint
     end
   end
 

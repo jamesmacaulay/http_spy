@@ -2,7 +2,7 @@ use Mix.Config
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
-config :httpspy, Httpspy.Endpoint,
+config :http_spy, HttpSpy.Endpoint,
   http: [port: 4001],
   server: false
 

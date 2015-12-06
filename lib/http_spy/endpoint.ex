@@ -1,14 +1,14 @@
-defmodule Httpspy.Endpoint do
-  use Phoenix.Endpoint, otp_app: :httpspy
+defmodule HttpSpy.Endpoint do
+  use Phoenix.Endpoint, otp_app: :http_spy
 
-  socket "/socket", Httpspy.UserSocket
+  socket "/socket", HttpSpy.UserSocket
 
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phoenix.digest
   # when deploying your static files in production.
   plug Plug.Static,
-    at: "/", from: :httpspy, gzip: false,
+    at: "/", from: :http_spy, gzip: false,
     only: ~w(css fonts images js favicon.ico robots.txt)
 
   # Code reloading can be explicitly enabled under the
@@ -32,8 +32,8 @@ defmodule Httpspy.Endpoint do
 
   plug Plug.Session,
     store: :cookie,
-    key: "_httpspy_key",
+    key: "_http_spy_key",
     signing_salt: "EyfxWhmO"
 
-  plug Httpspy.Router
+  plug HttpSpy.Router
 end

@@ -6,12 +6,12 @@
 use Mix.Config
 
 # Configures the endpoint
-config :httpspy, Httpspy.Endpoint,
+config :http_spy, HttpSpy.Endpoint,
   url: [host: "localhost"],
   root: Path.dirname(__DIR__),
   secret_key_base: "b95yKz0UpcxMhaCOq4HxLMWWAQi7Dzjqo2e+Rg0CziR6WfjV/irNSQF0mFiioitA",
   render_errors: [accepts: ~w(html json)],
-  pubsub: [name: Httpspy.PubSub,
+  pubsub: [name: HttpSpy.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger

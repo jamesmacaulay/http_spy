@@ -1,8 +1,8 @@
-defmodule Httpspy.Mixfile do
+defmodule HttpSpy.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :httpspy,
+    [app: :http_spy,
      version: "0.0.1",
      elixir: "~> 1.0",
      elixirc_paths: elixirc_paths(Mix.env),
@@ -16,7 +16,7 @@ defmodule Httpspy.Mixfile do
   #
   # Type `mix help compile.app` for more information.
   def application do
-    [mod: {Httpspy, []},
+    [mod: {HttpSpy, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger]]
   end
 

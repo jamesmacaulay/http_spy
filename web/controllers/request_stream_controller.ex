@@ -1,5 +1,5 @@
-defmodule Httpspy.RequestStreamController do
-  use Httpspy.Web, :controller
+defmodule HttpSpy.RequestStreamController do
+  use HttpSpy.Web, :controller
 
   def random_redirect(conn, _) do
     slug = :crypto.strong_rand_bytes(5) |> Base.encode32(case: :lower)
