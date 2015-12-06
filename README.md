@@ -6,6 +6,7 @@
 
   * You see requests in real time!
   * It is built with [Elixir](http://elixir-lang.org/), [Phoenix](http://www.phoenixframework.org/), and [Elm](http://elm-lang.org/)
+  * No persistence layer
   * Requests are irretrievable once you close the browser tab (for now)
   * URLs can't be private (for now)
 
