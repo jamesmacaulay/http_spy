@@ -9,18 +9,19 @@ defmodule Httpspy.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
-  end
-
   scope "/", Httpspy do
-    pipe_through :browser # Use the default browser stack
-
-    get "/", PageController, :index
+    pipe_through :browser
+    get "/", RequestStreamController, :random_redirect
+    get "/:slug/spy", RequestStreamController, :spy
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", Httpspy do
-  #   pipe_through :api
-  # end
+  get "/:slug", Httpspy.RequestStreamController, :capture
+  post "/:slug", Httpspy.RequestStreamController, :capture
+  put "/:slug", Httpspy.RequestStreamController, :capture
+  patch "/:slug", Httpspy.RequestStreamController, :capture
+  delete "/:slug", Httpspy.RequestStreamController, :capture
+  options "/:slug", Httpspy.RequestStreamController, :capture
+  connect "/:slug", Httpspy.RequestStreamController, :capture
+  trace "/:slug", Httpspy.RequestStreamController, :capture
+  head "/:slug", Httpspy.RequestStreamController, :capture
 end
