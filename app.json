@@ -1,0 +1,31 @@
+{
+  "name": "HttpSpy",
+  "description": "Watch HTTP requests as they happen",
+  "keywords": [
+    "elixir",
+    "phoenix",
+    "elm",
+    "http",
+    "tool"
+  ],
+  "website": "https://github.com/jamesmacaulay/http_spy",
+  "repository": "https://github.com/jamesmacaulay/http_spy",
+  "success_url": "/",
+  "env": {
+    "SECRET_KEY_BASE": {
+      "description": "A secret key for verifying the integrity of signed cookies.",
+      "generator": "secret"
+    }
+  },
+  "image": "heroku/cedar",
+  "addons": [
+  ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/HashNuke/heroku-buildpack-elixir.git"
+    },
+    {
+      "url": "https://github.com/gjaldon/heroku-buildpack-phoenix-static.git"
+    }
+  ]
+}

@@ -52,6 +52,7 @@ exports.config = {
 
   // Configure your plugins
   plugins: {
+    off: (process.env.MIX_ENV === 'prod' ? ['elm-brunch'] : []),
     elmBrunch: {
       elmFolder: 'web/elm',
       mainModules: ['HttpSpy.elm'],

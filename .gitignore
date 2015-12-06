@@ -24,4 +24,3 @@ erl_crash.dump
 /config/prod.secret.exs
 
 /web/elm/elm-stuff
-/web/static/vendor/httpspy.js
