@@ -20,11 +20,12 @@ import "deps/phoenix_html/web/static/js/phoenix_html"
 
 import socket from "./socket"
 
+const slug = document.location.pathname.split("/")[1];
+const requestUrl = document.location.protocol + "//" + document.location.host + "/" + slug;
 const elmDiv = document.getElementById('elm-main');
-const app = Elm.embed(Elm.HttpSpy, elmDiv, {requests: null});
+const app = Elm.embed(Elm.HttpSpy, elmDiv, {requests: null, requestUrl: requestUrl});
 
 socket.connect();
-const slug = document.location.pathname.split("/")[1];
 const requestChannel = socket.channel("requests:" + slug);
 
 requestChannel.join()

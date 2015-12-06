@@ -10622,12 +10622,58 @@ Elm.HttpSpy.make = function (_elm) {
    $Debug = Elm.Debug.make(_elm),
    $Effects = Elm.Effects.make(_elm),
    $Html = Elm.Html.make(_elm),
+   $Html$Attributes = Elm.Html.Attributes.make(_elm),
    $List = Elm.List.make(_elm),
    $Maybe = Elm.Maybe.make(_elm),
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm),
    $StartApp = Elm.StartApp.make(_elm);
    var _op = {};
+   var querySuffix = function (request) {    var _p0 = request.queryString;if (_p0 === "") {    return "";} else {    return A2($Basics._op["++"],"?",_p0);}};
+   var portSuffix = function (request) {
+      var _p1 = {ctor: "_Tuple2",_0: request.scheme,_1: request.portNumber};
+      _v1_2: do {
+         switch (_p1._0)
+         {case "http": if (_p1._1 === 80) {
+                    return "";
+                 } else {
+                    break _v1_2;
+                 }
+            case "https": if (_p1._1 === 443) {
+                    return "";
+                 } else {
+                    break _v1_2;
+                 }
+            default: break _v1_2;}
+      } while (false);
+      return A2($Basics._op["++"],":",$Basics.toString(_p1._1));
+   };
+   var requestOneLiner = function (request) {
+      return A2($Basics._op["++"],
+      request.method,
+      A2($Basics._op["++"],
+      " ",
+      A2($Basics._op["++"],
+      request.scheme,
+      A2($Basics._op["++"],
+      "://",
+      A2($Basics._op["++"],request.host,A2($Basics._op["++"],portSuffix(request),A2($Basics._op["++"],request.path,querySuffix(request))))))));
+   };
+   var requestView = function (request) {
+      return A2($Html.div,_U.list([]),_U.list([A2($Html.h3,_U.list([]),_U.list([$Html.text(requestOneLiner(request))]))]));
+   };
+   var update = F2(function (action,model) {
+      var _p2 = action;
+      if (_p2.ctor === "NoOp") {
+            return {ctor: "_Tuple2",_0: model,_1: $Effects.none};
+         } else {
+            return {ctor: "_Tuple2",_0: A2($List._op["::"],_p2._0,model),_1: $Effects.none};
+         }
+   });
+   var init = {ctor: "_Tuple2",_0: _U.list([]),_1: $Effects.none};
+   var Receive = function (a) {    return {ctor: "Receive",_0: a};};
+   var NoOp = {ctor: "NoOp"};
+   var Request = F8(function (a,b,c,d,e,f,g,h) {    return {scheme: a,method: b,host: c,portNumber: d,path: e,queryString: f,headers: g,remoteIp: h};});
    var requests = Elm.Native.Port.make(_elm).inboundSignal("requests",
    "Maybe.Maybe HttpSpy.Request",
    function (v) {
@@ -10657,30 +10703,31 @@ Elm.HttpSpy.make = function (_elm) {
                                                                                                                                                                                                                                                            v.remoteIp)} : _U.badPort("an object with fields `scheme`, `method`, `host`, `portNumber`, `path`, `queryString`, `headers`, `remoteIp`",
       v));
    });
-   var requestView = function (request) {    return A2($Html.div,_U.list([]),_U.list([$Html.text($Basics.toString(request))]));};
-   var view = F2(function (address,model) {    return A2($Html.div,_U.list([]),A2($List.map,requestView,model));});
-   var update = F2(function (action,model) {
-      var _p0 = action;
-      if (_p0.ctor === "NoOp") {
-            return {ctor: "_Tuple2",_0: model,_1: $Effects.none};
-         } else {
-            return {ctor: "_Tuple2",_0: A2($List._op["::"],_p0._0,model),_1: $Effects.none};
-         }
-   });
-   var init = {ctor: "_Tuple2",_0: _U.list([]),_1: $Effects.none};
-   var Receive = function (a) {    return {ctor: "Receive",_0: a};};
-   var NoOp = {ctor: "NoOp"};
    var requestActions = A3($Signal.filterMap,$Maybe.map(Receive),NoOp,requests);
+   var requestUrl = Elm.Native.Port.make(_elm).inbound("requestUrl",
+   "String",
+   function (v) {
+      return typeof v === "string" || typeof v === "object" && v instanceof String ? v : _U.badPort("a string",v);
+   });
+   var header = A2($Html.div,
+   _U.list([]),
+   _U.list([A2($Html.h1,_U.list([]),_U.list([$Html.text("HttpSpy")]))
+           ,$Html.text("Make some requests to ")
+           ,A2($Html.input,_U.list([$Html$Attributes.readonly(true),$Html$Attributes.value(requestUrl),$Html$Attributes.size(40)]),_U.list([]))]));
+   var view = F2(function (address,model) {    return A2($Html.div,_U.list([]),A2($List._op["::"],header,A2($List.map,requestView,model)));});
    var app = $StartApp.start({init: init,update: update,view: view,inputs: _U.list([requestActions])});
    var main = app.html;
-   var Request = F8(function (a,b,c,d,e,f,g,h) {    return {scheme: a,method: b,host: c,portNumber: d,path: e,queryString: f,headers: g,remoteIp: h};});
    return _elm.HttpSpy.values = {_op: _op
                                 ,Request: Request
                                 ,NoOp: NoOp
                                 ,Receive: Receive
                                 ,init: init
                                 ,update: update
+                                ,portSuffix: portSuffix
+                                ,querySuffix: querySuffix
+                                ,requestOneLiner: requestOneLiner
                                 ,requestView: requestView
+                                ,header: header
                                 ,view: view
                                 ,requestActions: requestActions
                                 ,app: app
