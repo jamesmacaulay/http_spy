@@ -10721,7 +10721,9 @@ Elm.HttpSpy.make = function (_elm) {
            _U.list([]),
            _U.list([$Html.text("Make some requests to ")
                    ,A2($Html.input,_U.list([$Html$Attributes.readonly(true),$Html$Attributes.value(requestUrl),$Html$Attributes.size(40)]),_U.list([]))]))]));
-   var view = F2(function (address,model) {    return A2($Html.div,_U.list([]),A2($List._op["::"],header,A2($List.map,requestView,model)));});
+   var view = F2(function (address,model) {
+      return A2($Html.div,_U.list([]),A2($List._op["::"],header,A2($List.map,requestView,A2($List.take,100,model))));
+   });
    var app = $StartApp.start({init: init,update: update,view: view,inputs: _U.list([requestActions])});
    var main = app.html;
    return _elm.HttpSpy.values = {_op: _op

@@ -98,7 +98,7 @@ view : Signal.Address Action -> Model -> Html
 view address model =
   Html.div
     [ ]
-    (header :: List.map requestView model)
+    (header :: List.map requestView (List.take 100 model))
 
 requestActions : Signal Action
 requestActions = Signal.filterMap (Maybe.map Receive) NoOp requests
