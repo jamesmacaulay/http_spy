@@ -1,5 +1,6 @@
 module HttpSpy (..) where
 
+import String
 import Effects exposing (Effects)
 import Signal exposing (Signal)
 import Html exposing (Html)
@@ -196,7 +197,7 @@ pageHeader =
             [ Html.input
                 [ type' "text"
                 , class "block field"
-                , size 32
+                , size (String.length requestUrl)
                 , readonly True
                 , value requestUrl
                 ]

@@ -10627,7 +10627,8 @@ Elm.HttpSpy.make = function (_elm) {
    $Maybe = Elm.Maybe.make(_elm),
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm),
-   $StartApp = Elm.StartApp.make(_elm);
+   $StartApp = Elm.StartApp.make(_elm),
+   $String = Elm.String.make(_elm);
    var _op = {};
    var requests = Elm.Native.Port.make(_elm).inboundSignal("requests",
    "Maybe.Maybe HttpSpy.Request",
@@ -10679,7 +10680,7 @@ Elm.HttpSpy.make = function (_elm) {
            _U.list([A2($Html.input,
            _U.list([$Html$Attributes.type$("text")
                    ,$Html$Attributes.$class("block field")
-                   ,$Html$Attributes.size(32)
+                   ,$Html$Attributes.size($String.length(requestUrl))
                    ,$Html$Attributes.readonly(true)
                    ,$Html$Attributes.value(requestUrl)]),
            _U.list([]))]))]));
