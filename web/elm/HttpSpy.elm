@@ -98,15 +98,6 @@ summaryView request =
         [ Html.h3
             [ class "mt0" ]
             [ Html.text (requestOneLiner request) ]
-        , Html.p
-            [ class "ml2" ]
-            [ Html.span
-                []
-                [ Html.text " received from IP address " ]
-            , Html.span
-                [ class "bold" ]
-                [ Html.text request.remoteIp ]
-            ]
         ]
 
 

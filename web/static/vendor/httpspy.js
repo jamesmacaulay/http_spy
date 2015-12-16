@@ -10740,13 +10740,7 @@ Elm.HttpSpy.make = function (_elm) {
       A2($Basics._op["++"],request.host,A2($Basics._op["++"],portSuffix(request),A2($Basics._op["++"],request.path,querySuffix(request))))))));
    };
    var summaryView = function (request) {
-      return A2($Html.div,
-      _U.list([]),
-      _U.list([A2($Html.h3,_U.list([$Html$Attributes.$class("mt0")]),_U.list([$Html.text(requestOneLiner(request))]))
-              ,A2($Html.p,
-              _U.list([$Html$Attributes.$class("ml2")]),
-              _U.list([A2($Html.span,_U.list([]),_U.list([$Html.text(" received from IP address ")]))
-                      ,A2($Html.span,_U.list([$Html$Attributes.$class("bold")]),_U.list([$Html.text(request.remoteIp)]))]))]));
+      return A2($Html.div,_U.list([]),_U.list([A2($Html.h3,_U.list([$Html$Attributes.$class("mt0")]),_U.list([$Html.text(requestOneLiner(request))]))]));
    };
    var requestView = function (request) {
       return A2($Html.div,
