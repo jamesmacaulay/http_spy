@@ -10629,70 +10629,6 @@ Elm.HttpSpy.make = function (_elm) {
    $Signal = Elm.Signal.make(_elm),
    $StartApp = Elm.StartApp.make(_elm);
    var _op = {};
-   var bodyView = function (body) {
-      return _U.eq(body,"") ? A2($Html.div,_U.list([]),_U.list([])) : A2($Html.div,
-      _U.list([]),
-      _U.list([A2($Html.h4,_U.list([]),_U.list([$Html.text("body")]))
-              ,A2($Html.textarea,_U.list([$Html$Attributes.cols(80),$Html$Attributes.rows(10)]),_U.list([$Html.text(body)]))]));
-   };
-   var headerEntry = function (_p0) {
-      var _p1 = _p0;
-      return _U.list([A2($Html.dt,_U.list([]),_U.list([$Html.text(_p1._0)])),A2($Html.dd,_U.list([]),_U.list([$Html.text(_p1._1)]))]);
-   };
-   var querySuffix = function (request) {    var _p2 = request.queryString;if (_p2 === "") {    return "";} else {    return A2($Basics._op["++"],"?",_p2);}};
-   var portSuffix = function (request) {
-      var _p3 = {ctor: "_Tuple2",_0: request.scheme,_1: request.portNumber};
-      _v2_2: do {
-         switch (_p3._0)
-         {case "http": if (_p3._1 === 80) {
-                    return "";
-                 } else {
-                    break _v2_2;
-                 }
-            case "https": if (_p3._1 === 443) {
-                    return "";
-                 } else {
-                    break _v2_2;
-                 }
-            default: break _v2_2;}
-      } while (false);
-      return A2($Basics._op["++"],":",$Basics.toString(_p3._1));
-   };
-   var requestOneLiner = function (request) {
-      return A2($Basics._op["++"],
-      request.method,
-      A2($Basics._op["++"],
-      " ",
-      A2($Basics._op["++"],
-      request.scheme,
-      A2($Basics._op["++"],
-      "://",
-      A2($Basics._op["++"],request.host,A2($Basics._op["++"],portSuffix(request),A2($Basics._op["++"],request.path,querySuffix(request))))))));
-   };
-   var requestView = function (request) {
-      return A2($Html.div,
-      _U.list([]),
-      _U.list([A2($Html.h3,_U.list([]),_U.list([$Html.text(requestOneLiner(request))]))
-              ,A2($Html.div,
-              _U.list([]),
-              _U.list([A2($Html.h4,_U.list([]),_U.list([$Html.text("headers")]))
-                      ,A2($Html.dl,_U.list([]),$List.concat(A2($List.map,headerEntry,request.headers)))]))
-              ,bodyView(request.body)]));
-   };
-   var update = F2(function (action,model) {
-      var _p4 = action;
-      if (_p4.ctor === "NoOp") {
-            return {ctor: "_Tuple2",_0: model,_1: $Effects.none};
-         } else {
-            return {ctor: "_Tuple2",_0: A2($List._op["::"],_p4._0,model),_1: $Effects.none};
-         }
-   });
-   var init = {ctor: "_Tuple2",_0: _U.list([]),_1: $Effects.none};
-   var Receive = function (a) {    return {ctor: "Receive",_0: a};};
-   var NoOp = {ctor: "NoOp"};
-   var Request = F9(function (a,b,c,d,e,f,g,h,i) {
-      return {scheme: a,method: b,host: c,portNumber: d,path: e,queryString: f,headers: g,remoteIp: h,body: i};
-   });
    var requests = Elm.Native.Port.make(_elm).inboundSignal("requests",
    "Maybe.Maybe HttpSpy.Request",
    function (v) {
@@ -10724,29 +10660,128 @@ Elm.HttpSpy.make = function (_elm) {
                                                                                                                                                                                                                                                                           v.body)} : _U.badPort("an object with fields `scheme`, `method`, `host`, `portNumber`, `path`, `queryString`, `headers`, `remoteIp`, `body`",
       v));
    });
-   var requestActions = A3($Signal.filterMap,$Maybe.map(Receive),NoOp,requests);
    var requestUrl = Elm.Native.Port.make(_elm).inbound("requestUrl",
    "String",
    function (v) {
       return typeof v === "string" || typeof v === "object" && v instanceof String ? v : _U.badPort("a string",v);
    });
-   var header = A2($Html.div,
+   var pageHeader = A2($Html.div,
    _U.list([]),
-   _U.list([A2($Html.h1,_U.list([]),_U.list([$Html.text("HttpSpy")]))
-           ,A2($Html.div,
+   _U.list([A2($Html.h1,_U.list([]),_U.list([$Html.text("http"),A2($Html.span,_U.list([$Html$Attributes.$class("muted")]),_U.list([$Html.text("spy")]))]))
+           ,A2($Html.p,
            _U.list([]),
            _U.list([A2($Html.a,
            _U.list([$Html$Attributes.href("https://github.com/jamesmacaulay/http_spy"),$Html$Attributes.target("_blank")]),
            _U.list([$Html.text("source on github")]))]))
+           ,A2($Html.p,_U.list([]),_U.list([$Html.text("You are currently spying on the following URL:")]))
            ,A2($Html.p,
            _U.list([]),
-           _U.list([$Html.text("Make some requests to ")
-                   ,A2($Html.input,_U.list([$Html$Attributes.readonly(true),$Html$Attributes.value(requestUrl),$Html$Attributes.size(40)]),_U.list([]))]))]));
-   var view = F2(function (address,model) {
-      return A2($Html.div,_U.list([]),A2($List._op["::"],header,A2($List.map,requestView,A2($List.take,100,model))));
+           _U.list([A2($Html.input,
+           _U.list([$Html$Attributes.type$("text")
+                   ,$Html$Attributes.$class("block col-4 field")
+                   ,$Html$Attributes.readonly(true)
+                   ,$Html$Attributes.value(requestUrl)]),
+           _U.list([]))]))]));
+   var bodyView = function (body) {
+      return _U.eq(body,"") ? A2($Html.div,_U.list([]),_U.list([])) : A2($Html.div,
+      _U.list([]),
+      _U.list([A2($Html.h3,_U.list([]),_U.list([$Html.text("body")]))
+              ,A2($Html.div,
+              _U.list([$Html$Attributes.$class("ml2 mr2")]),
+              _U.list([A2($Html.textarea,
+              _U.list([$Html$Attributes.$class("block col-12 field"),$Html$Attributes.readonly(true)]),
+              _U.list([$Html.text(body)]))]))]));
+   };
+   var headerEntry = function (_p0) {
+      var _p1 = _p0;
+      return A2($Html.tr,
+      _U.list([]),
+      _U.list([A2($Html.td,_U.list([]),_U.list([A2($Html.strong,_U.list([]),_U.list([$Html.text(_p1._0)]))]))
+              ,A2($Html.td,_U.list([]),_U.list([$Html.text(_p1._1)]))]));
+   };
+   var headersView = function (headers) {
+      return A2($Html.div,
+      _U.list([]),
+      _U.list([A2($Html.h3,_U.list([]),_U.list([$Html.text("headers")]))
+              ,A2($Html.div,
+              _U.list([$Html$Attributes.$class("overflow-scroll")]),
+              _U.list([A2($Html.table,_U.list([$Html$Attributes.$class("table-light")]),A2($List.map,headerEntry,headers))]))]));
+   };
+   var querySuffix = function (request) {    var _p2 = request.queryString;if (_p2 === "") {    return "";} else {    return A2($Basics._op["++"],"?",_p2);}};
+   var portSuffix = function (request) {
+      var _p3 = {ctor: "_Tuple2",_0: request.scheme,_1: request.portNumber};
+      _v2_2: do {
+         switch (_p3._0)
+         {case "http": if (_p3._1 === 80) {
+                    return "";
+                 } else {
+                    break _v2_2;
+                 }
+            case "https": if (_p3._1 === 443) {
+                    return "";
+                 } else {
+                    break _v2_2;
+                 }
+            default: break _v2_2;}
+      } while (false);
+      return A2($Basics._op["++"],":",$Basics.toString(_p3._1));
+   };
+   var requestOneLiner = function (request) {
+      return A2($Basics._op["++"],
+      request.method,
+      A2($Basics._op["++"],
+      " ",
+      A2($Basics._op["++"],
+      request.scheme,
+      A2($Basics._op["++"],
+      "://",
+      A2($Basics._op["++"],request.host,A2($Basics._op["++"],portSuffix(request),A2($Basics._op["++"],request.path,querySuffix(request))))))));
+   };
+   var summaryView = function (request) {
+      return A2($Html.div,
+      _U.list([]),
+      _U.list([A2($Html.h3,_U.list([$Html$Attributes.$class("mt0")]),_U.list([$Html.text(requestOneLiner(request))]))
+              ,A2($Html.p,
+              _U.list([$Html$Attributes.$class("ml2")]),
+              _U.list([A2($Html.span,_U.list([]),_U.list([$Html.text(" received from IP address ")]))
+                      ,A2($Html.span,_U.list([$Html$Attributes.$class("bold")]),_U.list([$Html.text(request.remoteIp)]))]))]));
+   };
+   var requestView = function (request) {
+      return A2($Html.div,
+      _U.list([$Html$Attributes.$class("mt2 p2 border")]),
+      _U.list([summaryView(request),headersView(request.headers),bodyView(request.body)]));
+   };
+   var requestListView = function (requests) {
+      return $List.isEmpty(requests) ? A2($Html.div,
+      _U.list([$Html$Attributes.$class("mt4")]),
+      _U.list([A2($Html.p,_U.list([]),_U.list([$Html.text("Try it out by entering the following command in your terminal to make a request:")]))
+              ,A2($Html.div,
+              _U.list([]),
+              _U.list([A2($Html.input,
+              _U.list([$Html$Attributes.type$("text")
+                      ,$Html$Attributes.$class("block col-6 field")
+                      ,$Html$Attributes.readonly(true)
+                      ,$Html$Attributes.value(A2($Basics._op["++"],"curl --data \"hello from curl :)\" ",requestUrl))]),
+              _U.list([]))]))])) : A2($Html.div,_U.list([$Html$Attributes.$class("mt4")]),A2($List.map,requestView,A2($List.take,100,requests)));
+   };
+   var view = F2(function (address,model) {    return A2($Html.div,_U.list([$Html$Attributes.$class("m3")]),_U.list([pageHeader,requestListView(model)]));});
+   var update = F2(function (action,model) {
+      var _p4 = action;
+      if (_p4.ctor === "NoOp") {
+            return {ctor: "_Tuple2",_0: model,_1: $Effects.none};
+         } else {
+            return {ctor: "_Tuple2",_0: A2($List._op["::"],_p4._0,model),_1: $Effects.none};
+         }
    });
+   var init = {ctor: "_Tuple2",_0: _U.list([]),_1: $Effects.none};
+   var Receive = function (a) {    return {ctor: "Receive",_0: a};};
+   var NoOp = {ctor: "NoOp"};
+   var requestActions = A3($Signal.filterMap,$Maybe.map(Receive),NoOp,requests);
    var app = $StartApp.start({init: init,update: update,view: view,inputs: _U.list([requestActions])});
    var main = app.html;
+   var Request = F9(function (a,b,c,d,e,f,g,h,i) {
+      return {scheme: a,method: b,host: c,portNumber: d,path: e,queryString: f,headers: g,remoteIp: h,body: i};
+   });
    return _elm.HttpSpy.values = {_op: _op
                                 ,Request: Request
                                 ,NoOp: NoOp
@@ -10756,10 +10791,13 @@ Elm.HttpSpy.make = function (_elm) {
                                 ,portSuffix: portSuffix
                                 ,querySuffix: querySuffix
                                 ,requestOneLiner: requestOneLiner
+                                ,summaryView: summaryView
                                 ,headerEntry: headerEntry
+                                ,headersView: headersView
                                 ,bodyView: bodyView
                                 ,requestView: requestView
-                                ,header: header
+                                ,pageHeader: pageHeader
+                                ,requestListView: requestListView
                                 ,view: view
                                 ,requestActions: requestActions
                                 ,app: app
