@@ -10678,7 +10678,8 @@ Elm.HttpSpy.make = function (_elm) {
            _U.list([]),
            _U.list([A2($Html.input,
            _U.list([$Html$Attributes.type$("text")
-                   ,$Html$Attributes.$class("block col-4 field bg-green")
+                   ,$Html$Attributes.$class("block field")
+                   ,$Html$Attributes.size(32)
                    ,$Html$Attributes.readonly(true)
                    ,$Html$Attributes.value(requestUrl)]),
            _U.list([]))]))]));
@@ -10756,10 +10757,10 @@ Elm.HttpSpy.make = function (_elm) {
       _U.list([$Html$Attributes.$class("mt4")]),
       _U.list([A2($Html.p,_U.list([]),_U.list([$Html.text("Try it out by entering the following command in your terminal to make a request:")]))
               ,A2($Html.div,
-              _U.list([]),
+              _U.list([$Html$Attributes.$class("col-12 sm-col-10 md-col-8")]),
               _U.list([A2($Html.input,
               _U.list([$Html$Attributes.type$("text")
-                      ,$Html$Attributes.$class("block col-6 field bg-green")
+                      ,$Html$Attributes.$class("block col-12 field")
                       ,$Html$Attributes.readonly(true)
                       ,$Html$Attributes.value(A2($Basics._op["++"],"curl --data \"hello from curl :)\" ",requestUrl))]),
               _U.list([]))]))])) : A2($Html.div,_U.list([$Html$Attributes.$class("mt4")]),A2($List.map,requestView,A2($List.take,100,requests)));

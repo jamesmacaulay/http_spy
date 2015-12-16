@@ -192,10 +192,11 @@ pageHeader =
             []
             [ Html.text "You are currently spying on the following URL:" ]
         , Html.p
-            []
+            [ ]
             [ Html.input
                 [ type' "text"
-                , class "block col-4 field bg-green"
+                , class "block field"
+                , size 32
                 , readonly True
                 , value requestUrl
                 ]
@@ -213,10 +214,10 @@ requestListView requests =
                 []
                 [ Html.text "Try it out by entering the following command in your terminal to make a request:" ]
             , Html.div
-                []
+                [ class "col-12 sm-col-10 md-col-8" ]
                 [ Html.input
                     [ type' "text"
-                    , class "block col-6 field bg-green"
+                    , class "block col-12 field"
                     , readonly True
                     , value ("curl --data \"hello from curl :)\" " ++ requestUrl)
                     ]
