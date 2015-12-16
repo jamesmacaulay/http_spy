@@ -10678,7 +10678,7 @@ Elm.HttpSpy.make = function (_elm) {
            _U.list([]),
            _U.list([A2($Html.input,
            _U.list([$Html$Attributes.type$("text")
-                   ,$Html$Attributes.$class("block col-4 field")
+                   ,$Html$Attributes.$class("block col-4 field bg-green")
                    ,$Html$Attributes.readonly(true)
                    ,$Html$Attributes.value(requestUrl)]),
            _U.list([]))]))]));
@@ -10759,7 +10759,7 @@ Elm.HttpSpy.make = function (_elm) {
               _U.list([]),
               _U.list([A2($Html.input,
               _U.list([$Html$Attributes.type$("text")
-                      ,$Html$Attributes.$class("block col-6 field")
+                      ,$Html$Attributes.$class("block col-6 field bg-green")
                       ,$Html$Attributes.readonly(true)
                       ,$Html$Attributes.value(A2($Basics._op["++"],"curl --data \"hello from curl :)\" ",requestUrl))]),
               _U.list([]))]))])) : A2($Html.div,_U.list([$Html$Attributes.$class("mt4")]),A2($List.map,requestView,A2($List.take,100,requests)));
