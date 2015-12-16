@@ -2,7 +2,7 @@
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-[HttpSpy](https://httpspy.herokuapp.com) is a (work-in-progress) HTTP request capturer/logger/debugger. It is a lot like the lovely [RequestBin](https://requestb.in), with a few noteworthy differences:
+[HttpSpy](http://httpspy.io) is a real-time HTTP request capturer/logger/debugger. It is a lot like the lovely [RequestBin](https://requestb.in), with a few noteworthy differences:
 
   * You see requests in real time!
   * It is built with [Elixir](http://elixir-lang.org/), [Phoenix](http://www.phoenixframework.org/), and [Elm](http://elm-lang.org/)
