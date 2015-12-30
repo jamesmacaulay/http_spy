@@ -48,6 +48,6 @@ defmodule HttpSpy.RequestStreamController do
   end
 
   def serializable_ip({a,b,c,d}) do
-    Enum.join([a,b,c,d], ".")
+    "#{a}.#{b}.#{c}.#{d}"
   end
 end
